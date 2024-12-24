@@ -1,0 +1,58 @@
+{% extends 'base_administracion.html' %}
+{% load static%} 
+{% block class %}class="header"{% endblock %}
+{% block h1header %}Administracion de Usuarios{% endblock %}
+{% block body %} 
+
+
+<div class="container">
+    <h1>Gestionar Usuario <img src="{% static 'images/icons/person-fill-1.svg' %}"></h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Contraseña</th>
+                <th>Correo</th>
+                <th>Activo</th>
+                <th>Administracion</th>
+                <th>Ultima vez Iniciado</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in usuarios %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username}}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td class="password">*********</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.is_active == True %}
+                    <img src="{% static 'images/icons/check2-circle1.svg' %}">
+                    {% else %}
+                    <img src="{% static 'images/icons/x-circle1.svg' %}">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_staff == True %}
+                    <img src="{% static 'images/icons/check2-circle1.svg' %}">
+                    {% else %}
+                    <img src="{% static 'images/icons/x-circle1.svg' %}">
+                    {% endif %}
+                </td>
+                <td>{{ user.last_login }}</td>
+                <td>
+                    <a href="eliminar_usuario/{{ user.username }}" class="btn btn-danger"><img src="{% static 'images/icons/person-dash-fill-b.svg'%}"></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

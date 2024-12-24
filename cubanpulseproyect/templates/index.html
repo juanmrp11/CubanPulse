@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static%} 
+{% block class %}class="header"{% endblock %}
+{% block body %} 
+<!-- Intro -->
+<div id="intro" class="basic-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="text-container">
+                    <div class="section-title">INTRO</div>
+                    <h2>We offer the best travel service to Cuba among other services.</h2>
+                    <p>Launching yourself on a new journey can be a pretty overwhelming process at times..</p>
+                    <p class="testimonial-text">"Our mission here at CubanPulse is to help you avoid any complications when organizing your trip, providing you with the best lodging and travel services throughout Cuba."</p>
+                </div> <!-- end of text-container -->
+            </div> <!-- end of col -->
+            <div class="col-lg-7">
+                <div class="image-container">
+                    <img class="img-fluid" src="{% static 'images/intro.jpg' %}" alt="alternative">
+                </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of basic-1 -->
+<!-- end of intro -->
+
+<!-- Services -->
+<div id="services" class="cards-2">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div class="section-title">SERVICES</div>
+            <h2>Choose the travel package<br>That adapts to your needs</h2>
+        </div> <!-- end of col -->
+    </div> <!-- end of row -->
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- Card -->
+            <h3>Natural</h3>
+            <a href="{% url 'natural' %}">
+                <div class="card-p filter">
+                    <div class="card-image-p element-item">
+                        <div class="element-item-overlay">
+                            <span>
+                                <p class="text-white">Perfect for living with nature and visiting the Cuban fields.</p>
+                                <div class="container media">
+                                    <ul class="list-unstyled li-space-lg">
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <p style="margin-bottom: 2px;" class="media-body text-white">Environment and nature</p>
+                                        </li>
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <p class="media-body text-white">Excursions and fresh air</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/natural.jpg' %}" alt="alternative">
+                    </div>
+                </div></a>
+            <!-- end of card -->
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- Card -->
+            <h3>Hotels</h3>
+            <a href="{% url 'hotels' %}">
+                <div class="card-p filter">
+                    <div class="card-image-p element-item">
+                        <div class="element-item-overlay">
+                            <span>
+                                <p class="text-white">Use this service package to visit the great hotels in Cuba spread throughout the country.</p>
+                                <div class="container media">
+                                    <ul class="list-unstyled li-space-lg">
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <p style="margin-bottom: 2px;" class="media-body text-white">Guaranteed comfort and tranquility</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/hotel.jpg' %}" alt="alternative">
+                    </div>
+                </div></a>
+            <!-- end of card -->
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- Card -->
+            <h3>Urbans</h3>
+            <a href="{% url 'urban' %}">
+                <div class="card-p filter">
+                    <div class="card-image-p element-item">
+                        <div class="element-item-overlay">
+                            <span>
+                                <p class="text-white">Package with a more urban perspective of Cuba, centered in the city of Havana</p>
+                                <div class="container media">
+                                    <ul class="list-unstyled li-space-lg">
+                                        <li class="media">
+                                            <i class="fas fa-square"></i>
+                                            <p style="margin-bottom: 2px;" class="media-body text-white">Restaurants, museums and city walks</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/urbano.jpg' %}" alt="alternative">
+                    </div>
+                </div></a>
+            <!-- end of card -->
+        </div>
+        <!-- end of col -->
+    </div> <!-- end of row -->
+</div> <!-- end of container -->
+</div> <!-- end of cards-2 -->
+<!-- end of services -->
+
+<!-- Other services -->
+<div id="projects" class="filter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">OTHER SERVICES</div>
+                <h2>Other services available</h2>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!--Aqui van los otros servicios-->                    
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of filter -->
+<!-- end of projects -->
+
+
+<!-- Team -->
+<div class="basic-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Our Team </h2>
+                <p class="p-heading">Here are the men and women who will help clients make their journey a reality</p>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+
+                <!-- Team Member -->
+                <div class="team-member">
+                    <div class="image-wrapper">
+                        <img class="img-fluid" src="images/team-1.png" alt="alternative">
+                    </div> <!-- end of image-wrapper -->
+                    <p class="p-large">John Whitelong</p>
+                    <p class="job-title">General Manager</p>
+                    <span class="social-icons">
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                        </span>
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-twitter fa-stack-1x"></i>
+                            </a>
+                        </span>
+                    </span>
+                </div> <!-- end of team-member -->
+                <!-- end of team member -->
+
+                <!-- Team Member -->
+                <div class="team-member">
+                    <div class="image-wrapper">
+                        <img class="img-fluid" src="images/team-2.png" alt="alternative">
+                    </div> <!-- end of image wrapper -->
+                    <p class="p-large">Veronique Smith</p>
+                    <p class="job-title">Business Developer</p>
+                    <span class="social-icons">
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                        </span>
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-twitter fa-stack-1x"></i>
+                            </a>
+                        </span>
+                    </span>
+                </div> <!-- end of team-member -->
+                <!-- end of team member -->
+
+                <!-- Team Member -->
+                <div class="team-member">
+                    <div class="image-wrapper">
+                        <img class="img-fluid" src="images/team-3.png" alt="alternative">
+                    </div> <!-- end of image wrapper -->
+                    <p class="p-large">Chris Zimerman</p>
+                    <p class="job-title">Online Marketer</p>
+                    <span class="social-icons">
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                        </span>
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-twitter fa-stack-1x"></i>
+                            </a>
+                        </span>
+                    </span>
+                </div> <!-- end of team-member -->
+                <!-- end of team member -->
+
+                <!-- Team Member -->
+                <div class="team-member">
+                    <div class="image-wrapper">
+                        <img class="img-fluid" src="images/team-4.png" alt="alternative">
+                    </div> <!-- end of image wrapper -->
+                    <p class="p-large">Mary Villalonga</p>
+                    <p class="job-title">Community Manager</p>
+                    <span class="social-icons">
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                        </span>
+                        <span class="fa-stack">
+                            <a href="#your-link">
+                                <span class="hexagon"></span>
+                                <i class="fab fa-twitter fa-stack-1x"></i>
+                            </a>
+                        </span>
+                    </span>
+                </div> <!-- end of team-member -->
+                <!-- end of team member -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of basic-2 -->
+<!-- end of team -->
+
+
+<!-- About -->
+<div id="about" class="counter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-xl-6">
+                <div class="image-container">
+                    <img class="img-fluid" src="{% static 'images/cubanpulselogo.png' %}" alt="alternative">
+                </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+            <div class="col-lg-7 col-xl-6">
+                <div class="text-container">
+                    <div class="section-title">ABOUT</div>
+                    <h2>We are passionate about offering travel services</h2>
+                    <p>Our goal is to provide a service 
+                        travel in convenience with your interests of visiting Cuba in all its splendor and beauty, together with nature and with the comfort that you deserve</p>
+                    <ul class="list-unstyled li-space-lg">
+                        <li class="media">
+                            <i class="fas fa-square"></i>
+                            <div class="media-body">Everything we offer is within reach of a click from the comfort of your home, guaranteeing organization and peace of mind when preparing your trip.</div>
+                        </li>
+                    </ul>
+
+                    <!-- Counter -->
+                    <div id="counter">
+                        <div class="cell">
+                            <div class="counter-value number-count" data-count="231">1</div>
+                            <div class="counter-info">Happy<br>Users</div>
+                        </div>
+                        <div class="cell">
+                            <div class="counter-value number-count" data-count="121">1</div>
+                            <div class="counter-info">Trips<br>made</div>
+                        </div>
+                    </div>
+                    <!-- end of counter -->
+
+                </div> <!-- end of text-container -->      
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of counter -->
+<!-- end of about -->
+
+
+<!-- Contact -->
+<div id="contact" class="form-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="text-container">
+                    <div class="section-title">CONTACT</div>
+                    <h2>Get In Touch Using The Form</h2>
+                    <p>You can use the following contact form for any questions or queries.</p>
+                    <ul class="list-unstyled li-space-lg">
+                        <li class="address"><i class="fas fa-map-marker-alt"></i>Direccion de la sede</li>
+                        <li><i class="fas fa-phone"></i><a href="#">55 555 555 555</a></li>
+                        <li><i class="fas fa-phone"></i><a href="#">55 555 555 555</a></li>
+                        <li><i class="fas fa-envelope"></i><a href="#">correo@gmail.com</a></li>
+                    </ul>
+                    <h3>Follow CubanPulse On Social Media</h3>
+
+                    <span class="fa-stack">
+                        <a href="https://www.facebook.com/profile.php?id=61569680355430">
+                            <span class="hexagon"></span>
+                            <i class="fab fa-facebook-f fa-stack-1x"></i>
+                        </a>
+                    </span>
+                    
+                    <span class="fa-stack">
+                        <a href="https://www.instagram.com/cuban_pulse/">
+                            <span class="hexagon"></span>
+                            <i class="fab fa-instagram fa-stack-1x"></i>
+                        </a>
+                    </span>
+                </div> <!-- end of text-container -->
+            </div> <!-- end of col -->
+            <div class="col-lg-6">
+                
+                <!-- Contact Form -->
+                <form id="contactForm" data-toggle="validator" data-focus="false">
+                    <div class="form-group">
+                        <input type="text" class="form-control-input" id="cname" required>
+                        <label class="label-control" for="cname">Name</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control-input" id="cemail" required>
+                        <label class="label-control" for="cemail">Email</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control-textarea" id="cmessage" required></textarea>
+                        <label class="label-control" for="cmessage">Your message</label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="cterms" value="Agreed-to-Terms" required>I agree with Aria's stated <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms-conditions.html">Terms Conditions</a> 
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="form-control-submit-button">SUBMIT MESSAGE</button>
+                    </div>
+                    <div class="form-message">
+                        <div id="cmsgSubmit" class="h3 text-center hidden"></div>
+                    </div>
+                </form>
+                <!-- end of contact form -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of form-2 -->
+<!-- end of contact -->
+{% endblock %}
