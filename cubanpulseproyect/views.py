@@ -2,6 +2,7 @@ from genericpath import samefile
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from .models import Paquete
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
@@ -61,7 +62,10 @@ def create_account(request):
 #Servicios
 @login_required
 def admin(request):
-    return render(request,'admin.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request,'admin.html',context)
 
 #Administracion de la pagina
 @login_required
@@ -70,7 +74,18 @@ def hotels_admin(request):
 
 @login_required
 def natural_admin(request):
-    return render(request,'natural_admin.html')
+    if request.POST.get('titulo') and request.POST.get('precio') and request.POST.get('descripcion') and request.FILES.get('imagen') and request.POST.get('reservada'):
+        paquete=Paquete()
+        paquete.titulo=request.POST.get('titulo')
+        paquete.precio=request.POST.get('precio')
+        paquete.imagen=request.FILES.get('imagen')
+        paquete.descripcion=request.POST.get('descripcion')
+        paquete.reservada=request.POST.get('reservada')
+        
+        paquete.save()
+        return redirect(reverse('index'))
+    else:
+        return render(request,'natural_admin.html')
 
 @login_required
 def urban_admin(request):
