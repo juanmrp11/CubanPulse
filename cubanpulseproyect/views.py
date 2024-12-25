@@ -44,7 +44,19 @@ def login_view(request):
     return render(request, 'login.html')
 
 def create_account(request):
-    return render(request,'create_account.html')
+    if request.POST.get('nombre') and request.POST.get('apellidos') and request.POST.get('usuario') and request.POST.get('pass') and request.POST.get('correo'):
+        usuario=User()
+        usuario.first_name=request.POST.get('nombre')
+        usuario.set_password(request.POST.get('pass'))
+        usuario.username=request.POST.get('usuario')
+        usuario.last_name=request.POST.get('apellidos')
+        usuario.email=request.POST.get('correo')
+        usuario.is_active=True
+        
+        usuario.save()
+        return redirect(reverse('index'))
+    else:
+        return render(request,'create_account.html')
 
 #Servicios
 @login_required
