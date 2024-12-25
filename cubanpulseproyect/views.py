@@ -43,6 +43,9 @@ def login_view(request):
 
     return render(request, 'login.html')
 
+def create_account(request):
+    return render(request,'create_account.html')
+
 #Servicios
 @login_required
 def admin(request):

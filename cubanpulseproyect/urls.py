@@ -17,6 +17,7 @@ urlpatterns = [
     path('salir/',views.salir,name='salir'),
     
     #Url de registrarse en la pagina
+    path('create_account', views.create_account,name='create_account'),
     
     #Url Servicios
     #Paquetes de Viaje
