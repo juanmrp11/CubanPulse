@@ -22,30 +22,39 @@
     <div class="header5">
         <div class="header-content" ></div>
         <div class="text-container bg-text" >
-            <h1 class="text-center text-white">Autenticarse</h1>
-            <h4 class="text-center text-white">Sistema de Soporte</h4>
-                {% if messages %}
-                    <div class="alert alert-danger" role="alert">
-                        {% for message in messages %}
-                            {{ message }}<br>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                <form method="POST" class="formulario" action="{% url 'login' %}">
+            <h1 class="text-center text-white">Sign up to CubanPulse</h1>
+                <form method="POST" class="formulario">
                     {% csrf_token %}
-                    <br>
                     <div class="mb-3 mt-3">
-                        <label class="form-label">Usuario:</label>
-                        <input type="text" class="form-control" placeholder="" name="username">
+                        <label class="form-label">First name :</label>
+                        <input type="text" class="form-control" name="nombre">
                     </div>
+        
                     <div class="mb-3 mt-3">
-                        <label class="form-label">Contrasena:</label>
-                        <input type="password" class="form-control" placeholder="" name="password">
+                        <label class="form-label">Last name :</label>
+                        <input type="text" class="form-control" name="apellidos">
                     </div>
-                    <button type="submit" class="btn-solid-lg page-scroll cuadro-2">SIGN IN</button>
+                    
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Username :</label>
+                        <input type="text" class="form-control"name="usuario">
+                    </div>
+        
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Password :</label>
+                        <input id="id_password1" type="password" class="form-control" name="pass">
+                    </div>
+        
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Email :</label>
+                        <input type="text" class="form-control" name="correo">
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <button type="submit" class="btn-solid-lg page-scroll">CONTINUE</button>
+                        <a href="{% url 'login' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
+                    </div>
                 </form>
-                <p class="text-white">New to CubanPulse? <a class="text-primary" href="">Create an account</a></p>
                 
         </div>
     </div>

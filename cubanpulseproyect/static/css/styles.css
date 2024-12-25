@@ -184,6 +184,24 @@ strong {
 	text-decoration: none;
 }
 
+.btn-solid-lg-1 {
+	display: inline-block;
+	padding: 1.375rem 2.125rem 1.375rem 2.125rem;
+	border: 0.125rem solid #bf1414;
+	border-radius: 0.25rem;
+	color: #fff;
+	background-color: #bf1414;
+	transition: all 0.2s;
+	font: 700 0.75rem/0 "Montserrat", sans-serif;
+	text-decoration: none;
+}
+
+.btn-solid-lg-1:hover {
+	color: #bf1414;
+	background-color: transparent;
+	text-decoration: none;
+}
+
 .btn-outline-reg {
 	display: inline-block;
 	padding: 1.1875rem 1.875rem 1.1875rem 1.875rem;
@@ -2193,11 +2211,6 @@ a:hover.back-to-top {
 		background-size: cover;
     }
 
-	.bg-text{
-		padding-right: 100px;
-		padding-bottom: 200px;
-		padding-left: 100px;
-	}
 	/* end of header */
 
 

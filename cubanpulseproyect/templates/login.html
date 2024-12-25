@@ -22,8 +22,8 @@
     <div class="header5">
         <div class="header-content" ></div>
         <div class="text-container bg-text" >
-            <h1 class="text-center text-white">Autenticarse</h1>
-            <h4 class="text-center text-white">Sistema de Soporte</h4>
+            <h1 class="text-center text-white">Sign In</h1>
+            <h4 class="text-center text-white">Cuban Pulse</h4>
                 {% if messages %}
                     <div class="alert alert-danger" role="alert">
                         {% for message in messages %}
@@ -36,16 +36,17 @@
                     {% csrf_token %}
                     <br>
                     <div class="mb-3 mt-3">
-                        <label class="form-label">Usuario:</label>
+                        <label class="form-label">Username:</label>
                         <input type="text" class="form-control" placeholder="" name="username">
                     </div>
                     <div class="mb-3 mt-3">
-                        <label class="form-label">Contrasena:</label>
+                        <label class="form-label">Password:</label>
                         <input type="password" class="form-control" placeholder="" name="password">
                     </div>
-                    <button type="submit" class="btn-solid-lg page-scroll cuadro-2">SIGN IN</button>
+                    <button type="submit" class="btn-solid-lg page-scroll">SIGN IN</button>
+                    <a href="{% url 'index' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
                 </form>
-                <p class="text-white">New to CubanPulse? <a class="text-primary" href="">Create an account</a></p>
+                <p class="text-white">New to CubanPulse? <a class="text-primary" href="{% url 'create_account' %}">Create an account</a></p>
                 
         </div>
     </div>
