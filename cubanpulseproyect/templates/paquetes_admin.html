@@ -1,11 +1,10 @@
 {% extends 'base_administracion.html' %}
 {% load static%} 
-{% block class %}class="header2"{% endblock %}
 {% block h1header %}Administracion de Paquetes Natural{% endblock %}
 {% block body %} 
 
 <!-- Services -->
-<div id="services" class="cards-3">
+<div id="services" class="cards-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -21,6 +20,15 @@
                             <label class="form-label">Titulo:</label>
                             <input type="text" class="form-control" placeholder="" name="titulo">
                         </div>
+                        <div class="mb-3 mt-3 col-lg-6">
+                            <label class="form-label">Tipo:</label>
+                            <select id="tipo" name="tipo" class="form-control">
+                                <option>Seleccione un tipo</option>
+                                <option value="Natural">Natural</option>
+                                <option value="Hotels">Hotels</option>
+                                <option value="Urbano">Urbano</option>
+                            </select>
+                        </div>
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Precio:</label>
                             <input type="float" class="form-control" placeholder="" name="precio">
@@ -33,19 +41,9 @@
                             <label class="form-label">Descripcion:</label>
                             <input type="text" class="form-control" placeholder="" name="descripcion">
                         </div>
-                        <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">
-                                Reservada: <br>
-                                <input class="radiolist inline" type="radio" name="reservada" value="True" checked="">
-                                <label for="">Si</label>
-                                <br>
-                                <input class="radiolist inline" type="radio" name="reservada" value="False" checked="">
-                                <label for="">No</label>
-                            </label>
-                        </div>
                     </div>
                     <button type="submit" class="btn-solid-lg page-scroll">Agregar</button>
-                    <a href="{% url 'index' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
+                    <a href="{% url 'adminis' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
                 </form>
             </div> <!-- end of col -->
         </div> <!-- end of row -->

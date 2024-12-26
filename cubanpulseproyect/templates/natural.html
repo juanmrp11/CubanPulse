@@ -15,82 +15,33 @@
         </div> <!-- end of row -->
         <div class="row">
             <div class="col-lg-12">
+            {% for paquete in paquetes %}
+            {% if paquete.tipo == 'Natural' %}
+            <!-- Card -->
+            <div class="card">
+                <div class="card-image">
+                    <img class="img-fluid" src="{{ paquete.imagen.url }}" alt="alternative">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ paquete.titulo }}</h3>
+                    <p>{{ paquete.descripcion }}</p>
+                    <p class="price">Starting at <span>${{paquete.precio}}</span></p>
+                </div>
+                <div class="button-container">
+                    <a class="btn-solid-reg page-scroll" href="details/{{ paquete.id }}">DETAILS</a>
+                </div> <!-- end of button-container -->
+            </div>
+            <!-- end of card -->
+            {% endif %}
+            {% endfor %}
                 
-                <!-- Card -->
-                <div class="card">
-                    <div class="card-image">
-                        <img class="img-fluid" src="{% static 'images/natural.jpg' %}" alt="alternative">
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Natural</h3>
-                        <p>Perfect for living with nature and visiting the Cuban fields.</p>
-                        <ul class="list-unstyled li-space-lg">
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Environment and nature</div>
-                            </li>
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Excursions and fresh air</div>
-                            </li>
-                        </ul>
-                        <p class="price">Starting at <span>$199</span></p>
-                    </div>
-                    <div class="button-container">
-                        <a class="btn-solid-reg page-scroll" href="{% url 'natural' %}">DETAILS</a>
-                    </div> <!-- end of button-container -->
-                </div>
-                <!-- end of card -->
-
-                <!-- Card -->
-                <div class="card">
-                    <div class="card-image">
-                        <img class="img-fluid" src="{% static 'images/hotel.jpg' %}" alt="alternative">
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Hotels</h3>
-                        <p>Use this service package to visit the great hotels in Cuba spread throughout the country.</p>
-                        <ul class="list-unstyled li-space-lg">
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Guaranteed comfort and tranquility</div>
-                            </li>
-                        </ul>
-                        <p class="price">Starting at <span>$299</span></p>
-                    </div>
-                    <div class="button-container">
-                        <a class="btn-solid-reg page-scroll" href="#callMe">DETAILS</a>
-                    </div> <!-- end of button-container -->
-                </div>
-                <!-- end of card -->
-
-                <!-- Card -->
-                <div class="card">
-                    <div class="card-image">
-                        <img class="img-fluid" src="{% static 'images/urbano.jpg' %}" alt="alternative">
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Urban</h3>
-                        <p>Package with a more urban perspective of Cuba, centered in the city of Havana</p>
-                        <ul class="list-unstyled li-space-lg">
-                            <li class="media">
-                                <i class="fas fa-square"></i>
-                                <div class="media-body">Restaurants, museums and city walks</div>
-                            </li>
-                        </ul>
-                        <p class="price">Starting at <span>$299</span></p>
-                    </div>
-                    <div class="button-container">
-                        <a class="btn-solid-reg page-scroll" href="#callMe">DETAILS</a>
-                    </div> <!-- end of button-container -->
-                </div>
-                <!-- end of card -->
 
             </div> <!-- end of col -->
         </div> <!-- end of row -->
     </div> <!-- end of container -->
 </div> <!-- end of cards-2 -->
 <!-- end of services -->
+
 
 
 

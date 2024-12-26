@@ -10,21 +10,34 @@ from django.contrib import messages
 from django.contrib.staticfiles.utils import get_files
 # Create your views here.
 
+#---------------------------------------------------------------------------------------------------------------------------
 def index(request):
     return render(request, 'index.html')
 
+#---------------------------------------------------------------------------------------------------------------------------
 #Services
-
 #Paquetes de Viajes
 def natural(request):
-    return render(request, 'natural.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request, 'natural.html',context)
 
 def hotels(request):
     return render(request, 'hotels.html')
 
 def urban(request):
-    return render(request, 'urban.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request, 'urban.html',context)
 
+def details(request,id):
+    context={
+        'detalles': Paquete.objects.get(id=id),
+    }
+    return render(request, 'details.html',context)
+#---------------------------------------------------------------------------------------------------------------------------
 #Vista de login en el sistema de administacion
 def login_view(request):
     if request.method == 'POST':
@@ -59,37 +72,37 @@ def create_account(request):
     else:
         return render(request,'create_account.html')
 
-#Servicios
+#Deslogearse de la pagina
+def salir(request):
+    logout(request)
+    return redirect('/')
+
+
+
+#---------------------------------------------------------------------------------------------------------------------------
+#Administracion de la pagina
+#Administrar Paquetes
+@login_required
+def paquetes_admin(request):
+    if request.POST.get('titulo') and request.POST.get('precio') and request.POST.get('descripcion') and request.FILES.get('imagen') and request.POST.get('tipo'):
+        paquete=Paquete()
+        paquete.titulo=request.POST.get('titulo')
+        paquete.precio=request.POST.get('precio')
+        paquete.imagen=request.FILES.get('imagen')
+        paquete.descripcion=request.POST.get('descripcion')
+        paquete.tipo=request.POST.get('tipo')
+        paquete.save()
+        return redirect(reverse('adminis'))
+    else:
+        return render(request,'paquetes_admin.html')
+
+#Index Admin
 @login_required
 def admin(request):
     context={
         'paquetes': Paquete.objects.all(),
     }
     return render(request,'admin.html',context)
-
-#Administracion de la pagina
-@login_required
-def hotels_admin(request):
-    return render(request,'hotels_admin.html')
-
-@login_required
-def natural_admin(request):
-    if request.POST.get('titulo') and request.POST.get('precio') and request.POST.get('descripcion') and request.FILES.get('imagen') and request.POST.get('reservada'):
-        paquete=Paquete()
-        paquete.titulo=request.POST.get('titulo')
-        paquete.precio=request.POST.get('precio')
-        paquete.imagen=request.FILES.get('imagen')
-        paquete.descripcion=request.POST.get('descripcion')
-        paquete.reservada=request.POST.get('reservada')
-        
-        paquete.save()
-        return redirect(reverse('index'))
-    else:
-        return render(request,'natural_admin.html')
-
-@login_required
-def urban_admin(request):
-    return render(request,'urban_admin.html')
 
 #Administrar usuarios
 @login_required
@@ -99,7 +112,23 @@ def administrar_usuarios(request):
     }
     return render(request,'administrar_usuarios.html',context)
 
-#Deslogearse de la pagina
-def salir(request):
-    logout(request)
-    return redirect('/')
+#Eliminar paquete
+@login_required
+def eliminar_paquete(request,id):
+    paquete=Paquete.objects.get(id=id)
+    paquete.delete()
+    return redirect(reverse('adminis'))
+
+#Modificar paquete
+@login_required
+def modificar_paquete(request,id):
+    paquete=Paquete.objects.get(id=id)
+    
+    if paquete.reservada==False:
+        paquete.reservada=True
+        paquete.save()
+        return redirect(reverse('adminis'))
+    else:
+        paquete.reservada=False
+        paquete.save()
+        return redirect(reverse('adminis'))

@@ -7,10 +7,10 @@ urlpatterns = [
     
     #Url de login de los usuarios de administracion de la pagina
     path('accounts/login/', views.login_view, name='login'),
-    path('administracion', views.admin,name="adminis"),
-    path('administracion/hotels_admin', views.hotels_admin,name='hotels_admin'),
-    path('administracion/natural_admin', views.natural_admin,name='natural_admin'),
-    path('administracion/urban_admin', views.urban_admin,name='urban_admin'),
+    path('administracion/', views.admin,name="adminis"),
+    path('administracion/paquetes', views.paquetes_admin,name='paquetes_admin'),
+    path('administracion/eliminar/<id>', views.eliminar_paquete,name='eliminar_paquete'),
+    path('administracion/reservada/<id>', views.modificar_paquete,name='modificar_paquete'),
     path('administracion/usuarios',views.administrar_usuarios,name='usuarios'),
     
     #Url de deslogearse
@@ -21,8 +21,10 @@ urlpatterns = [
     
     #Url Servicios
     #Paquetes de Viaje
-    path('natural',views.natural,name="natural"),
-    path('hotels',views.hotels,name="hotels"),
-    path('urban',views.urban,name="urban"),
+    path('natural/',views.natural,name="natural"),
+    path('hotels/',views.hotels,name="hotels"),
+    path('urban/',views.urban,name="urban"),
+    path('natural/details/<id>',views.details,name='details'),
+    path('urban/details/<id>',views.details,name='details'),
     
 ]
