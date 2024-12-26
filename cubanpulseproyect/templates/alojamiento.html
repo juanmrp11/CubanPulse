@@ -1,6 +1,6 @@
 {% extends 'base_administracion.html' %}
 {% load static%} 
-{% block h1header %}Agregar Paquete{% endblock %}
+{% block h1header %}Administracion Alojamientos{% endblock %}
 {% block body %} 
 
 <!-- Services -->
@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="section-title">AGREGAR PAQUETE</div>
+                <div class="section-title">AGREGAR ALOJAMIENTO</div>
             </div> <!-- end of col -->
         </div> <!-- end of row -->
         <div class="row">
@@ -17,17 +17,12 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" placeholder="" name="titulo">
+                            <label class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" placeholder="" name="nombre">
                         </div>
-                        <div class="mb-3 mt-3 col-lg-6">
-                            <label class="form-label">Tipo:</label>
-                            <select id="tipo" name="tipo" class="form-control">
-                                <option>Seleccione un tipo</option>
-                                <option value="Natural">Natural</option>
-                                <option value="Hotels">Hotels</option>
-                                <option value="Urbano">Urbano</option>
-                            </select>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Cantidad de Habitaciones:</label>
+                            <input type="float" class="form-control" placeholder="" name="habitaciones">
                         </div>
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Precio:</label>
@@ -36,6 +31,10 @@
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Imagen:</label>
                             <input type="file" class="form-control" accept="image/*" name="imagen">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-6">
+                            <label class="form-label">Ubicacion:</label>
+                            <input type="text" class="form-control" placeholder="" name="ubicacion">
                         </div>
                         <div class="mb-3 mt-3 col-lg-6">
                             <label class="form-label">Descripcion:</label>

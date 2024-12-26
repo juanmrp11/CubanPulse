@@ -49,29 +49,20 @@
                 <li class="nav-item">
                     <a class="nav-link page-scroll" href="{% url 'adminis' %}">Administracion <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="{% url 'paquetes_admin' %}">Agregar Paquete</a>
+                <!-- Dropdown Menu -->          
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle page-scroll" data-bs-toggle="dropdown" href="#" >SERVICIOS</a >
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'paquetes_admin' %}">AGREGAR PAQUETE</a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a href="{% url 'alojamiento' %}" class="dropdown-item">AGREGAR ALOJAMIENTO</a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a href="{% url 'usuarios' %}" class="dropdown-item">ADMINISTRAR USUARIOS</a>
+                    </div>
                 </li>
-                
-
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="{% url 'usuarios' %}">Administrar Usuarios</a>
-                </li>
+            <!-- end of dropdown menu -->
             </ul>
-            <span class="nav-item social-icons">
-                <span class="fa-stack">
-                    <a href="https://www.facebook.com/profile.php?id=61569680355430">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-facebook-f fa-stack-1x"></i>
-                    </a>
-                </span>
-                <span class="fa-stack">
-                    <a href="https://www.instagram.com/cuban_pulse/">
-                        <span class="hexagon"></span>
-                        <i class="fab fa-instagram fa-stack-1x"></i>
-                    </a>
-                </span>
-            </span>
+            
             {% if request.user.is_authenticated %}
             <!-- Dropdown Menu -->          
             <li class="nav-item dropdown">

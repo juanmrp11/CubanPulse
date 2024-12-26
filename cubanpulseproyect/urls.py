@@ -10,8 +10,8 @@ urlpatterns = [
     path('administracion/', views.admin,name="adminis"),
     path('administracion/paquetes', views.paquetes_admin,name='paquetes_admin'),
     path('administracion/eliminar/<id>', views.eliminar_paquete,name='eliminar_paquete'),
-    path('administracion/reservada/<id>', views.modificar_paquete,name='modificar_paquete'),
     path('administracion/usuarios',views.administrar_usuarios,name='usuarios'),
+    path('administracion/alojamiento',views.alojamiento_admin,name='alojamiento'),
     
     #Url de deslogearse
     path('salir/',views.salir,name='salir'),

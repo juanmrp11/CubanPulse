@@ -2,7 +2,7 @@ from genericpath import samefile
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Paquete
+from .models import Paquete, Alojamientos
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
@@ -119,16 +119,17 @@ def eliminar_paquete(request,id):
     paquete.delete()
     return redirect(reverse('adminis'))
 
-#Modificar paquete
+#Administrar alojamiento
 @login_required
-def modificar_paquete(request,id):
-    paquete=Paquete.objects.get(id=id)
-    
-    if paquete.reservada==False:
-        paquete.reservada=True
-        paquete.save()
+def alojamiento_admin(request):
+    if request.POST.get('nombre') and request.POST.get('habitaciones') and request.POST.get('precio') and request.FILES.get('imagen') and request.POST.get('ubicacion') and request.POST.get('descripcion'):
+        alojamiento=Alojamientos()
+        alojamiento.titulo=request.POST.get('titulo')
+        alojamiento.precio=request.POST.get('precio')
+        alojamiento.imagen=request.FILES.get('imagen')
+        alojamiento.descripcion=request.POST.get('descripcion')
+        alojamiento.tipo=request.POST.get('tipo')
+        alojamiento.save()
         return redirect(reverse('adminis'))
     else:
-        paquete.reservada=False
-        paquete.save()
-        return redirect(reverse('adminis'))
+        return render(request,'paquetes_admin.html')

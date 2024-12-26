@@ -15,9 +15,11 @@ class Paquete(models.Model):
 
 #Alojamiento
 class Alojamientos(models.Model):
+    descripcion=models.TextField(max_length=500)
     cantidad_habitaciones=models.IntegerField()
     ubicacion=models.CharField(max_length=100)
     precio=models.FloatField()
+    imagen=models.ImageField(upload_to='media/')
     nombre=models.CharField(max_length=100)
 
     def __str__(self):

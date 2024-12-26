@@ -843,7 +843,7 @@ input[type='checkbox'] {
 }
 
 .header6 {
-	height: 500px;
+	height: 218px;
 	background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../images/config.jpg') center center no-repeat;
 	background-size: cover;
 }
