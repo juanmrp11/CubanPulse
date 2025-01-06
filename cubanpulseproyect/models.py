@@ -8,6 +8,7 @@ class Imagen(models.Model):
 #Servicios
 #Servicios playa
 class Servicio(models.Model):
+    tipo=models.CharField(null=True,max_length=20)
     nombre=models.CharField(max_length=20)
     descripcion=models.TextField(max_length=1000)
     precio=models.FloatField()
@@ -18,7 +19,7 @@ class Servicio(models.Model):
 
 #Alojamiento
 class Alojamiento(models.Model):
-    nombre=models.CharField(primary_key=True,max_length=20)
+    nombre=models.CharField(max_length=20)
     ubicacion=models.CharField(max_length=200)
     descripcion=models.TextField(max_length=1500)
     precio=models.FloatField()

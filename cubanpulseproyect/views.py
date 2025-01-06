@@ -8,6 +8,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.staticfiles.utils import get_files
+
 # Create your views here.
 
 #---------------------------------------------------------------------------------------------------------------------------
@@ -25,12 +26,16 @@ def playa(request):
     return render(request, 'playa.html')
 
 def urban(request):
-    
-    return render(request, 'urban.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request, 'urban.html',context)
 
 def details(request,id):
-    
-    return render(request, 'details.html')
+    context={
+        'paquete': Paquete.objects.get(nombre=id),
+    }
+    return render(request, 'details.html',context)
 
 
 #---------------------------------------------------------------------------------------------------------------------------
@@ -93,10 +98,36 @@ def administrar_usuarios(request):
 #Administrar Paquetes
 @login_required
 def paquetes_admin(request):
-    context={
+    context = {
         'hospedajes': Alojamiento.objects.all(),
+        'servicios': Servicio.objects.all(),
+        'paquetes': Paquete.objects.all(),
     }
-    return render(request,'paquetes_admin.html',context)
+    
+    if request.method == 'POST':
+        paquete = Paquete(
+            nombre=request.POST.get('nombre'),
+            tipo=request.POST.get('tipo'),
+            precio=request.POST.get('precio'),
+            duracion=request.POST.get('duracion'),
+            descripcion=request.POST.get('descripcion'),
+            imagen=request.FILES.get('imagen'),
+        )
+        paquete.save()
+        
+        # Agregar servicios
+        servicios = request.POST.getlist('servicios')
+        for servicio_id in servicios:
+            paquete.servicios.add(servicio_id)  # Agregar ID individualmente
+        
+        # Agregar hospedajes
+        hospedajes = request.POST.getlist('hospedajes')
+        for hospedaje_id in hospedajes:
+            paquete.hospedaje.add(hospedaje_id)  # Agregar ID individualmente
+        
+        return redirect('paquetes_admin')
+    
+    return render(request, 'paquetes_admin.html', context)
 #Eliminar paquete
 @login_required
 def eliminar_paquete(request,id):
@@ -137,7 +168,7 @@ def alojamiento_admin(request):
 def eliminar_alojamiento(request,id):
     alojamiento=Alojamiento.objects.get(id=id)
     alojamiento.delete()
-    return redirect(reverse('adminis'))
+    return redirect(reverse('alojamiento_admin'))
 
 #Administrar Servicios
 @login_required
@@ -145,18 +176,14 @@ def servicios_admin(request):
     context={
         'servicios': Servicio.objects.all(),
     }
-    if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('precio') and request.POST.get('noches'):
+    if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('precio'):
         servicio=Servicio()
         servicio.nombre=request.POST.get('nombre')
         servicio.descripcion=request.POST.get('descripcion')
         noches = request.POST.get('noches')
         servicio.cant_dias = int(noches) if noches else None
-        print(f"cant_dias: {servicio.cant_dias}") 
         servicio.precio=request.POST.get('precio')
-        try:
-            servicio.save()
-        except Exception as e:
-            print(f"Error al guardar el servicio: {e}")
+        servicio.save()
         return redirect(reverse('servicios_admin'))
     else:
         return render(request,'servicios_admin.html',context)
