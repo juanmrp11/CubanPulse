@@ -46,21 +46,22 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="{% url 'adminis' %}">Administracion <span class="sr-only">(current)</span></a>
-                </li>
                 <!-- Dropdown Menu -->          
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle page-scroll" data-bs-toggle="dropdown" href="#" >SERVICIOS</a >
+                    <a class="nav-link dropdown-toggle page-scroll" href="#services" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="true">Administracion</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'paquetes_admin' %}">AGREGAR PAQUETE</a>
+                        <a class="dropdown-item" href="{% url 'servicios_admin' %}"><span class="item-text">Administrar Servicios</span></a>
                         <div class="dropdown-items-divide-hr"></div>
-                        <a href="{% url 'alojamiento' %}" class="dropdown-item">AGREGAR ALOJAMIENTO</a>
+                        <a class="dropdown-item" href="{% url 'imagenes_admin' %}"><span class="item-text">Administrar Imagenes</span></a>
                         <div class="dropdown-items-divide-hr"></div>
-                        <a href="{% url 'usuarios' %}" class="dropdown-item">ADMINISTRAR USUARIOS</a>
+                        <a class="dropdown-item" href="{% url 'paquetes_admin' %}"><span class="item-text">Administrar Paquetes</span></a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a class="dropdown-item" href="{% url 'alojamiento_admin' %}"><span class="item-text">Administrar Alojamientos</span></a>
+                        <div class="dropdown-items-divide-hr"></div>
+                        <a class="dropdown-item" href="{% url 'usuarios' %}"><span class="item-text">Administrar Usuarios</span></a>
                     </div>
                 </li>
-            <!-- end of dropdown menu -->
+                <!-- end of dropdown menu -->
             </ul>
             
             {% if request.user.is_authenticated %}

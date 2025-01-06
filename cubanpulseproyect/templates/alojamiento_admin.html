@@ -1,0 +1,134 @@
+{% extends 'base_administracion.html' %}
+{% load static%} 
+{% block h1header %}Administracion Alojamientos{% endblock %}
+{% block body %} 
+
+<!-- Formulario de Agregar Alojamiento -->
+<div id="services" class="cards-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">AGREGAR ALOJAMIENTO</div>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" placeholder="" name="nombre">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-6">
+                            <label class="form-label">Ubicacion:</label>
+                            <input type="text" class="form-control" placeholder="" name="ubicacion">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Precio:</label>
+                            <input type="float" class="form-control" placeholder="" name="precio">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-6">
+                            <label class="form-label">Descripcion:</label>
+                            <input type="text" class="form-control" placeholder="" name="descripcion">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Tipo:</label>
+                            <select class="form-control" name="tipo" id="tipo">
+                                <option value="">Seleccione</option>
+                                <option value="Natural">Natural</option>
+                                <option value="Playa">Playa</option>
+                                <option value="Urbano">Urbano</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Cantidad de Habitaciones:</label>
+                            <input type="float" class="form-control" placeholder="" name="habitaciones">
+                        </div>
+                        
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Imagen:</label>
+                            <input type="file" class="form-control" name="imagenes" multiple accept="image/*" required>
+                        </div>
+                        
+                        
+                    </div>
+                    <button type="submit" class="btn-solid-lg page-scroll">AGREGAR</button>
+                    <a href="{% url 'adminis' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
+                </form>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of cards-2 -->
+<!-- end of Formulario -->
+
+<!-- Alojamientos -->
+<div id="services" class="cards-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">ALOJAMIENTOS</div>
+                <br>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+            {% for alojamiento in alojamientos %}
+            <!-- Card -->
+            <div class="card">
+                <div class="card-image">
+                    <div id="carouselAlojamiento" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for imagen in alojamiento.imagen.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <img class="d-block w-100" src="{{ imagen.imagen.url }}" alt="{{ alojamiento.nombre }} - {{ imagen.tipo }}">
+                                </div>
+                            {% empty %}
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="ruta/a/imagen_por_defecto.jpg" alt="No hay imágenes disponibles">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselAlojamiento" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselAlojamiento" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Siguiente</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ alojamiento.nombre }}</h3>
+                    <p>{{ alojamiento.descripcion }}</p>
+                    <ul class="list-unstyled li-space-lg">
+                        <li class="media">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="media-body">{{ alojamiento.ubicacion }}</div>
+                        </li>
+                    </ul>
+                    <p class="price">Starting at <span>${{alojamiento.precio}}</span></p>
+                </div>
+                <div class="button-container">
+                    {% if alojamiento.reservado == True %}
+                        <a class="btn-solid-reg page-scroll" href="reservar_alojamiento/{{ alojamiento.id }}">LIBERAR</a>
+                    {% else %}
+                        <a class="btn-solid-reg page-scroll" href="reservar_alojamiento/{{ alojamiento.id }}">RESERVADA</a>
+                    {% endif %}
+                    <a class="btn-solid-reg-1 page-scroll" href="eliminar_alojamiento/{{ alojamiento.id }}">ELIMINAR</a>
+                </div> <!-- end of button-container -->
+            </div>
+            <!-- end of card -->
+            {% endfor %}
+                
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of cards-2 -->
+<!-- end of Alojamientos -->
+
+
+
+{% endblock %}

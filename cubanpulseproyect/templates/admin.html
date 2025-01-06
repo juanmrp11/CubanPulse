@@ -26,7 +26,49 @@
                     <p class="price">Starting at <span>${{paquete.precio}}</span></p>
                 </div>
                 <div class="button-container">
-                    <a class="btn-solid-reg-1 page-scroll" href="eliminar/{{ paquete.id }}">ELIMINAR</a>
+                    <a class="btn-solid-reg-1 page-scroll" href="eliminar_paquete/{{ paquete.id }}">ELIMINAR</a>
+                </div> <!-- end of button-container -->
+            </div>
+            <!-- end of card -->
+            {% endfor %}
+                
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of cards-2 -->
+<!-- end of services -->
+
+<!-- Alojamientos -->
+<div id="services" class="cards-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">ALOJAMIENTOS</div>
+                <br>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+            {% for alojamiento in alojamientos %}
+            <!-- Card -->
+            <div class="card">
+                <div class="card-image">
+                    <img class="img-fluid" src="{{ alojamiento.imagen.url }}" alt="alternative">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ alojamiento.nombre }}</h3>
+                    <p>{{ alojamiento.descripcion }}</p>
+                    <ul class="list-unstyled li-space-lg">
+                        <li class="media">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="media-body">{{ alojamiento.ubicacion }}</div>
+                        </li>
+                    </ul>
+                    <p class="price">Starting at <span>${{alojamiento.precio}}</span></p>
+                </div>
+                <div class="button-container">
+                    <a class="btn-solid-reg-1 page-scroll" href="eliminar_alojamiento/{{ alojamiento.id }}">ELIMINAR</a>
                 </div> <!-- end of button-container -->
             </div>
             <!-- end of card -->

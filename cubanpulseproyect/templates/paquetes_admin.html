@@ -1,6 +1,6 @@
 {% extends 'base_administracion.html' %}
 {% load static%} 
-{% block h1header %}Agregar Paquete{% endblock %}
+{% block h1header %}Administrar Paquetes{% endblock %}
 {% block body %} 
 
 <!-- Services -->
@@ -17,21 +17,33 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">Titulo:</label>
-                            <input type="text" class="form-control" placeholder="" name="titulo">
+                            <label class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" placeholder="" name="nombre">
                         </div>
-                        <div class="mb-3 mt-3 col-lg-6">
+                        <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Tipo:</label>
                             <select id="tipo" name="tipo" class="form-control">
                                 <option>Seleccione un tipo</option>
                                 <option value="Natural">Natural</option>
-                                <option value="Hotels">Hotels</option>
+                                <option value="Beach">Playa</option>
                                 <option value="Urbano">Urbano</option>
                             </select>
                         </div>
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Precio:</label>
                             <input type="float" class="form-control" placeholder="" name="precio">
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Hospedajes:</label>
+                            <select name="hospedaje" id="hospedaje" class="form-control" multiple>
+                                {% for hospedaje in hospedajes %}
+                                    <option value="{{ hospedaje.id }}">{{ hospedaje.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 mt-3 col-lg-3">
+                            <label class="form-label">Duracion:</label>
+                            <input type="float" class="form-control" placeholder="Duracion en noches" name="duracion">
                         </div>
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Imagen:</label>
