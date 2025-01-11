@@ -12,6 +12,7 @@ urlpatterns = [
     #Url de administracion
     #Paquetes
     path('administracion/paquetes', views.paquetes_admin,name='paquetes_admin'),
+    path('administracion/modificar_paquete/<id>', views.modificar_paquete,name='modificar_paquete'),
     path('administracion/eliminar_paquete/<id>', views.eliminar_paquete,name='eliminar_paquete'),
     #Usuarios
     path('administracion/usuarios',views.administrar_usuarios,name='usuarios'),
@@ -38,5 +39,6 @@ urlpatterns = [
     path('urban/',views.urban,name="urban"),
     path('natural/details/<id>',views.details,name='details'),
     path('urban/details/<id>',views.details,name='details'),
+    path('playa/details/<id>',views.details,name='details'),
     
 ]

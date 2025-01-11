@@ -19,11 +19,16 @@ def index(request):
 #Services
 #Paquetes de Viajes
 def natural(request):
-    
-    return render(request, 'natural.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request, 'natural.html',context)
 
 def playa(request):
-    return render(request, 'playa.html')
+    context={
+        'paquetes': Paquete.objects.all(),
+    }
+    return render(request, 'playa.html',context)
 
 def urban(request):
     context={
@@ -108,8 +113,8 @@ def paquetes_admin(request):
         paquete = Paquete(
             nombre=request.POST.get('nombre'),
             tipo=request.POST.get('tipo'),
-            precio=request.POST.get('precio'),
-            duracion=request.POST.get('duracion'),
+            duracion_noches=request.POST.get('duracion'),
+            duracion_dias= int(request.POST.get('duracion'))+1,
             descripcion=request.POST.get('descripcion'),
             imagen=request.FILES.get('imagen'),
         )
@@ -131,9 +136,28 @@ def paquetes_admin(request):
 #Eliminar paquete
 @login_required
 def eliminar_paquete(request,id):
-    paquete=Paquete.objects.get(id=id)
+    paquete=Paquete.objects.get(nombre=id)
     paquete.delete()
-    return redirect(reverse('adminis'))
+    return redirect(reverse('paquetes_admin'))
+
+#Modificar Paquetes
+@login_required
+def modificar_paquete(request,id):
+    context={
+        'paquete':Paquete.objects.get(nombre=id),
+        'hospedajes': Alojamiento.objects.all(),
+        'servicios': Servicio.objects.all(),
+    }
+    
+    if request.POST.get('hospedajes'):
+        paquete=Paquete.objects.get(nombre=id)
+        
+        hospedajes = request.POST.getlist('hospedajes')
+        for hospedaje_id in hospedajes:
+            paquete.hospedaje.add(hospedaje_id)
+        return redirect('paquetes_admin')
+    
+    return render(request, 'modificar_paquete.html', context)
 
 #Administrar Alojamientos
 @login_required
@@ -149,7 +173,6 @@ def alojamiento_admin(request):
             precio=request.POST.get('precio'),
             descripcion=request.POST.get('descripcion'),
             tipo=request.POST.get('tipo'),
-            cant_habitaciones=request.POST.get('habitaciones')
         )
         alojamiento.save()
 
@@ -176,13 +199,12 @@ def servicios_admin(request):
     context={
         'servicios': Servicio.objects.all(),
     }
-    if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('precio'):
+    if request.POST.get('nombre') and request.POST.get('descripcion') and request.POST.get('precio') and request.POST.get('tipo'):
         servicio=Servicio()
         servicio.nombre=request.POST.get('nombre')
         servicio.descripcion=request.POST.get('descripcion')
-        noches = request.POST.get('noches')
-        servicio.cant_dias = int(noches) if noches else None
         servicio.precio=request.POST.get('precio')
+        servicio.tipo=request.POST.get('tipo')
         servicio.save()
         return redirect(reverse('servicios_admin'))
     else:

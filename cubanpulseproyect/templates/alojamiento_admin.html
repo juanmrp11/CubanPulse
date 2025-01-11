@@ -18,32 +18,28 @@
                     <div class="row">
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" placeholder="" name="nombre">
+                            <input type="text" class="form-control" placeholder="" name="nombre" required>
                         </div>
                         <div class="mb-3 mt-3 col-lg-6">
                             <label class="form-label">Ubicacion:</label>
-                            <input type="text" class="form-control" placeholder="" name="ubicacion">
-                        </div>
-                        <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">Precio:</label>
-                            <input type="float" class="form-control" placeholder="" name="precio">
-                        </div>
-                        <div class="mb-3 mt-3 col-lg-6">
-                            <label class="form-label">Descripcion:</label>
-                            <input type="text" class="form-control" placeholder="" name="descripcion">
+                            <input type="text" class="form-control" placeholder="" name="ubicacion" required>
                         </div>
                         <div class="mb-3 mt-3 col-lg-3">
                             <label class="form-label">Tipo:</label>
-                            <select class="form-control" name="tipo" id="tipo">
+                            <select class="form-control" name="tipo" id="tipo" required>
                                 <option value="">Seleccione</option>
                                 <option value="Natural">Natural</option>
                                 <option value="Playa">Playa</option>
                                 <option value="Urbano">Urbano</option>
                             </select>
                         </div>
+                        <div class="mb-3 mt-3 col-lg-6">
+                            <label class="form-label">Descripcion:</label>
+                            <input type="text" class="form-control" placeholder="" name="descripcion" required>
+                        </div>
                         <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">Cantidad de Habitaciones:</label>
-                            <input type="float" class="form-control" placeholder="" name="habitaciones">
+                            <label class="form-label">Precio/noches:</label>
+                            <input type="float" class="form-control" placeholder="" name="precio" required>
                         </div>
                         
                         <div class="mb-3 mt-3 col-lg-3">
@@ -101,21 +97,13 @@
                             <div class="media-body">{{ alojamiento.ubicacion }}</div>
                         </li>
                     </ul>
-                    <p class="price">Starting at <span>${{alojamiento.precio}}</span></p>
                 </div>
                 <div class="button-container">
-                    {% if alojamiento.reservado == True %}
-                        <a class="btn-solid-reg page-scroll" href="reservar_alojamiento/{{ alojamiento.id }}">LIBERAR</a>
-                    {% else %}
-                        <a class="btn-solid-reg page-scroll" href="reservar_alojamiento/{{ alojamiento.id }}">RESERVADA</a>
-                    {% endif %}
                     <a class="btn-solid-reg-1 page-scroll" href="eliminar_alojamiento/{{ alojamiento.id }}">ELIMINAR</a>
                 </div> <!-- end of button-container -->
             </div>
             <!-- end of card -->
             {% endfor %}
-                
-
             </div> <!-- end of col -->
         </div> <!-- end of row -->
     </div> <!-- end of container -->

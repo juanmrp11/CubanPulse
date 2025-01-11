@@ -25,8 +25,12 @@
                             <input type="float" class="form-control" placeholder="" name="precio">
                         </div>
                         <div class="mb-3 mt-3 col-lg-3">
-                            <label class="form-label">Cantidad de días:</label>
-                            <input type="float" class="form-control" placeholder="" name="noches">
+                            <label class="form-label">Tipo:</label>
+                            <select id="tipo" name="tipo" class="form-control">
+                                <option>Seleccione un tipo</option>
+                                <option value="Paquetes">Paquetes</option>
+                                <option value="Otros">Otros</option>
+                            </select>
                         </div>
                         <div class="mb-3 mt-3 col-lg-6">
                             <label class="form-label">Descripcion:</label>
@@ -52,7 +56,7 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Precio</th>
-                <th>Cantidad de dias</th>
+                <th>Tipo</th>
                 <th>Descripcion</th>
                 <th>Opciones</th>
             </tr>
@@ -63,7 +67,7 @@
                 <td>{{ servicio.id }}</td>
                 <td>{{ servicio.nombre}}</td>
                 <td>{{ servicio.precio }}</td>
-                <td>{{ servicio.cant_dias }}</td>
+                <td>{{ servicio.tipo }}</td>
                 <td>{{ servicio.descripcion }}</td>
                 <td>
                     <a class="btn-solid-reg-1 page-scroll" href="eliminar_servicio/{{ servicio.id }}">ELIMINAR</a>
