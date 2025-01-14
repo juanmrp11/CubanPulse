@@ -34,6 +34,7 @@ urlpatterns = [
     
     #Url Servicios
     #Paquetes de Viaje
+    
     path('natural/',views.natural,name="natural"),
     path('playa/',views.playa,name="playa"),
     path('urban/',views.urban,name="urban"),

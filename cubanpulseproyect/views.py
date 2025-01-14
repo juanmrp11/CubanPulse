@@ -2,12 +2,14 @@ from genericpath import samefile
 from http.client import HTTPResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Paquete, Servicio, Alojamiento, Imagen
+from .models import Paquete, Servicio, Alojamiento, Imagen, Reserva
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.staticfiles.utils import get_files
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 
@@ -36,12 +38,60 @@ def urban(request):
     }
     return render(request, 'urban.html',context)
 
-def details(request,id):
-    context={
-        'paquete': Paquete.objects.get(nombre=id),
-    }
-    return render(request, 'details.html',context)
+@login_required
+def details(request, id):
+    paquete = Paquete.objects.get(nombre=id)
+    alojamientos_disponibles = []
+    
+    if request.method == 'POST':
+        servicios_ids = request.POST.getlist('servicios')
+        alojamiento_id = request.POST.get('alojamiento_id')
+        fecha_inicio = request.POST.get('fecha_inicio')
+        fecha_fin = request.POST.get('fecha_fin')
+        precio_total = request.POST.get('precio_total')
 
+        # Verificar si las fechas son válidas
+        if not fecha_inicio or not fecha_fin:
+            messages.error(request, "Por favor selecciona un rango de fechas válido.")
+            return redirect('details', id=id)
+
+        # Crear la reserva
+        alojamiento = Alojamiento.objects.get(id=alojamiento_id)
+
+        # Verificar si el alojamiento está disponible en las fechas seleccionadas
+        if alojamiento.esta_disponible(fecha_inicio, fecha_fin):
+            reserva = Reserva.objects.create(
+                usuario=request.user,
+                paquete=paquete,
+                alojamiento=alojamiento,
+                fecha_inicio=fecha_inicio,
+                fecha_fin=fecha_fin,
+                precio_total=precio_total
+            )
+            # Marcar el alojamiento como reservado
+            alojamiento.reservado = True
+            alojamiento.save()
+            # Asociar servicios seleccionados
+            for servicio_id in servicios_ids:
+                reserva.servicios.add(Servicio.objects.get(id=servicio_id))
+            # Enviar correo de confirmación
+            enviar_correo_reserva(request.user, reserva)
+            return redirect('index')
+        else:
+            messages.error(request, "El alojamiento no está disponible en esas fechas.")
+            return redirect('details', id=id)
+
+    # Filtrar alojamientos disponibles solo si las fechas están definidas
+    if 'fecha_inicio' in request.POST and 'fecha_fin' in request.POST:
+        for alojamiento in paquete.hospedaje.all():
+            if alojamiento.esta_disponible(fecha_inicio, fecha_fin):
+                alojamientos_disponibles.append(alojamiento)
+
+    context = {
+        'paquete': paquete,
+        'alojamientos_disponibles': alojamientos_disponibles,
+    }
+    return render(request, 'details.html', context)
 
 #---------------------------------------------------------------------------------------------------------------------------
 #Login en el sistema
@@ -113,8 +163,6 @@ def paquetes_admin(request):
         paquete = Paquete(
             nombre=request.POST.get('nombre'),
             tipo=request.POST.get('tipo'),
-            duracion_noches=request.POST.get('duracion'),
-            duracion_dias= int(request.POST.get('duracion'))+1,
             descripcion=request.POST.get('descripcion'),
             imagen=request.FILES.get('imagen'),
         )
@@ -238,3 +286,29 @@ def eliminar_imagen(request,id):
     imagen=Imagen.objects.get(id=id)
     imagen.delete()
     return redirect(reverse('imagenes_admin'))
+
+#Enviar Email
+def enviar_correo_reserva(usuario, reserva):
+    asunto = f"Confirmación de Reserva: {reserva.paquete.nombre}"
+    # Obtener los nombres de los servicios seleccionados
+    servicios_seleccionados = reserva.servicios.all()
+    servicios_nombres = ", ".join([servicio.nombre for servicio in servicios_seleccionados])  # Formatear como una lista
+    mensaje = f"""
+    Hola {usuario.username},
+    Gracias por realizar una reserva.
+    Detalles de tu reserva:
+    Id Reservacion: {reserva.id}
+    Paquete: {reserva.paquete.nombre}
+    Alojamiento: {reserva.alojamiento.nombre}
+    Servicios seleccionados: {servicios_nombres}
+    Fecha de inicio: {reserva.fecha_inicio}
+    Fecha de fin: {reserva.fecha_fin}
+    Precio total: ${reserva.precio_total}
+    ¡Esperamos que disfrutes de tu estancia!
+    Saludos,
+    Cuban Pulse.
+    """
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [usuario.email,'programador.ejecutivo.pc@gmail.com']
+
+    send_mail(asunto, mensaje, from_email, recipient_list)

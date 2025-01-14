@@ -2,139 +2,148 @@
 {% load static%}
 {% block body %} 
 
-<div id="services" class="cards-3">
-    <div class="container">
-        <header class="section-header">
-            <h2 style="color: #14bf98;">RESERVATION</h2>
-            <h4>{{ paquete.nombre }}</h4>
-        </header>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="basic-1-d">
-                            <div class="image-container">
-                                <img class="img-fluid" src="{{ paquete.imagen.url }}" alt="{{ paquete.nombre }}">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div id="services" class="cards-3">
+        <div class="container">
+            <header class="section-header">
+                <h2 style="color: #14bf98;">RESERVATION</h2>
+                <h4>{{ paquete.nombre }}</h4>
+            </header>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="basic-1-d">
+                                <div class="image-container">
+                                    <img class="img-fluid" src="{{ paquete.imagen.url }}" alt="{{ paquete.nombre }}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <h6>Duration:</h6>
-                                <p id="duracion">{{ paquete.duracion_noches }} nights</p>
-                                <h6>Description:</h6>
-                                <p>{{ paquete.descripcion }}</p>
-                            </div>
-                            <div class="col-lg-6">
-                                <h3>Reservation date</h3>
-                                <div class="calendar">
-                                    <div class="headerc">
-                                        <button id="prevBtn" aria-label="Previous month">
-                                            <img src="{% static 'images/icons/arrow-left.svg' %}" alt="Previous">
-                                        </button>
-                                        <div class="monthYear" id="monthYear"></div>
-                                        <button id="nextBtn" aria-label="Next month">
-                                            <img src="{% static 'images/icons/arrow-right.svg' %}" alt="Next">
-                                        </button>
-                                        <button id="todayBtn" aria-label="Select today's date">Hoy</button>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h6>Description:</h6>
+                                    <p>{{ paquete.descripcion }}</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h3>Reservation date</h3>
+                                    <div class="calendar">
+                                        <div class="headerc">
+                                            <span id="prevBtn" aria-label="Previous month">
+                                                <img src="{% static 'images/icons/arrow-left.svg' %}" alt="Previous">
+                                            </span>
+                                            <div class="monthYear" id="monthYear"></div>
+                                            <span id="nextBtn" aria-label="Next month">
+                                                <img src="{% static 'images/icons/arrow-right.svg' %}" alt="Next">
+                                            </span>
+                                            <span id="todayBtn" aria-label="Select today's date">Hoy</span>
+                                        </div>
+                                        <div class="days">
+                                            <div class="day">Sun</div>
+                                            <div class="day">Mon</div>
+                                            <div class="day">Tue</div>
+                                            <div class="day">Wed</div>
+                                            <div class="day">Thu</div>
+                                            <div class="day">Fri</div>
+                                            <div class="day">Sat</div>
+                                        </div>
+                                        <div class="dates" id="dates"></div>
                                     </div>
-                                    <div class="days">
-                                        <div class="day">Mon</div>
-                                        <div class="day">Tue</div>
-                                        <div class="day">Wed</div>
-                                        <div class="day">Thu</div>
-                                        <div class="day">Fri</div>
-                                        <div class="day">Sat</div>
-                                        <div class="day">Sun</div>
-                                    </div>
-                                    <div class="dates" id="dates"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
-            <br>
         </div>
     </div>
-</div>
-
-<div class="container">
-    <h2>Services</h2>
-</div>
-
-<div class="container tar">
-    {% for servicio in paquete.servicios.all %}
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="servicios" id="servicio_{{ servicio.id }}" value="{{ servicio.id }}" data-price="{{ servicio.precio }}">
-        <label class="form-check-label" for="servicio_{{ servicio.id }}">
-            {{ servicio.nombre }} - {{ servicio.descripcion }} - $ {{ servicio.precio }}
-        </label>
-    </div>
-    {% endfor %}
-</div>
-
-<div class="container">
-    <h2>Accommodations</h2>
-</div>
-{% for alojamiento in paquete.hospedaje.all %}
-<div class="container tar">
     
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="imgreserva">
-                <div id="carouselAlojamiento" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for imagen in alojamiento.imagen.all %}
-                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                <img class="" src="{{ imagen.imagen.url }}" alt="{{ alojamiento.nombre }} - {{ imagen.tipo }}">
-                            </div>
-                        {% empty %}
-                            <div class="carousel-item active">
-                                <img class="" src="ruta/a/imagen_por_defecto.jpg" alt="No hay imágenes disponibles">
-                            </div>
-                        {% endfor %}
+    <div class="container">
+        <h2>Services</h2>
+    </div>
+    
+    <div class="container">
+        {% for servicio in paquete.servicios.all %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="servicios" id="servicio_{{ servicio.id }}" value="{{ servicio.id }}" data-price="{{ servicio.precio }}">
+            <label class="form-check-label" for="servicio_{{ servicio.id }}">
+                {{ servicio.nombre }} 
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="container">
+        <h2>Accommodations</h2>
+    </div>
+    
+    
+    {% for alojamiento in paquete.hospedaje.all %}
+    {% if alojamiento.reservado == False %}
+    <div class="container tar" data-alojamiento-id="{{ alojamiento.id }}">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="imgreserva">
+                    <div id="carouselAlojamiento" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            {% if alojamiento.imagen.all %}
+                                {% for imagen in alojamiento.imagen.all %}
+                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                        <img class="" src="{{ imagen.imagen.url }}" alt="{{ alojamiento.nombre }} - {{ imagen.tipo }}">
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="carousel-item active">
+                                    <img class="" src="ruta/a/imagen_por_defecto.jpg" alt="No hay imágenes disponibles">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3>{{ alojamiento.nombre }}</h3>
+                <h6><i class="fas fa-map-marker-alt"></i> Location: {{ alojamiento.ubicacion }}</h6>
+                <h6>Description: {{ alojamiento.descripcion }}</h6>
+                <br>
+                <div class="orientacion">
+                    <span class="btn-solid-reg l">SELECT</span> <!-- Botón para seleccionar el alojamiento -->
+                    <p class="r">$ {{ alojamiento.precio }}/night</p> <!-- Precio del alojamiento -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+    
+    <input type="hidden" name="servicio.id" id="servicio.id" value="">  <!-- ID del servicio seleccionado -->
+    <input type="hidden" name="alojamiento_id" id="alojamiento_id" value="">  <!-- ID del alojamiento seleccionado -->
+    <input type="hidden" name="fecha_inicio" id="fecha_inicio" value="">  <!-- Fecha de inicio -->
+    <input type="hidden" name="fecha_fin" id="fecha_fin" value="">  <!-- Fecha de fin -->
+    <input type="hidden" name="precio_total" id="precio_total" value="0">  <!-- Precio total calculado -->
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="{% url 'urban' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
+            </div>
+            <div class="col-lg-9">
+                <div class="orientacion">
+                    <button type="submit" class="btn-solid-reg-r page-scroll">RESERVE</button>
+                    <div class="container">
+                        <h2 class="r">Total: <span id="totalPrice">$0</span></h2>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            <h3>{{ alojamiento.nombre }}</h3>
-            <h6>Rooms: <p>{{alojamiento.cant_habitaciones}}</p></h6>
-            <h6><i class="fas fa-map-marker-alt"> Location: <p>{{ alojamiento.ubicacion }}</p></i></h6>
-            <h6>Description <p>{{ alojamiento.descripcion }}</p></h6>
-            <br>
-            <div class="orientacion">
-                <button class="btn-solid-reg page-scroll l">SELECT</button>
-                <p class="r">$ {{ alojamiento.precio }}/nigth</p>
-            </div>
-        </div>
     </div>
-</div>
-{% endfor %}
+</form>
 
-<div class="container mt-5 mb-5">
-    <div class="row">
-        <div class="col-lg-3">
-            {% if paquete.tipo == 'Urbano' %}
-                <a href="{% url 'urban' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
-            {% else %}
-                {% if paquete.tipo == 'Natural' %}
-                    <a href="{% url 'natural' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
-                {% else %}
-                    <a href="{% url 'playa' %}" class="btn-solid-lg-1 page-scroll">CANCEL</a>
-                {% endif %}    
-            {% endif %}
-        </div>
-        <div class="col-lg-9">
-            <div class="orientacion">
-                <a class="btn-solid-reg-r page-scroll l" href="reservar_alojamiento/{{ alojamiento.id }}">RESERVE</a>
-                <div class="container">
-                    <h2>Total: <span id="totalPrice">$0</span></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    const reservas = {{ reservas|safe }};  // Convertir las reservas a un objeto JavaScript
+    console.log(reservas);
+</script>
+
 {% endblock %}
