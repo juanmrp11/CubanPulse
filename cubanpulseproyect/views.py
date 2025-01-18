@@ -10,7 +10,8 @@ from django.contrib import messages
 from django.contrib.staticfiles.utils import get_files
 from django.core.mail import send_mail
 from django.conf import settings
-
+from datetime import datetime
+import json
 # Create your views here.
 
 #---------------------------------------------------------------------------------------------------------------------------
@@ -41,55 +42,50 @@ def urban(request):
 @login_required
 def details(request, id):
     paquete = Paquete.objects.get(nombre=id)
-    alojamientos_disponibles = []
     
+    fecha_desde = request.GET.get('fecha_inicio')
+    fecha_hasta = request.GET.get('fecha_fin')
+    
+    # Filtrar casas según las fechas de disponibilidad
+    if fecha_desde and fecha_hasta:
+        alojamientos_disponibles = []
+        for alojamiento in ad:
+            disponibilidad = alojamiento.get_disponibilidad()  # Usar el método get_disponibilidad
+            ocupada = False
+            for rango in disponibilidad:
+                if (rango['desde'] <= fecha_hasta) and (rango['hasta'] >= fecha_desde):
+                    ocupada = True
+                    break
+            if not ocupada:
+                alojamientos_disponibles.append(alojamiento)
+    
+        ad = alojamientos_disponibles
+        
     if request.method == 'POST':
         servicios_ids = request.POST.getlist('servicios')
         alojamiento_id = request.POST.get('alojamiento_id')
-        fecha_inicio = request.POST.get('fecha_inicio')
-        fecha_fin = request.POST.get('fecha_fin')
+        fecha_iniciof = request.POST.get('fecha_inicio')
+        fecha_finf = request.POST.get('fecha_fin')
         precio_total = request.POST.get('precio_total')
 
-        # Verificar si las fechas son válidas
-        if not fecha_inicio or not fecha_fin:
-            messages.error(request, "Por favor selecciona un rango de fechas válido.")
-            return redirect('details', id=id)
+            
+        reserva = Reserva.objects.create(
+            usuario=request.user,
+            paquete=paquete,
+            alojamiento=alojamiento_id,
+            fecha_inicio=fecha_iniciof,
+            fecha_fin=fecha_finf,
+            precio_total=precio_total
+        )
 
-        # Crear la reserva
-        alojamiento = Alojamiento.objects.get(id=alojamiento_id)
-
-        # Verificar si el alojamiento está disponible en las fechas seleccionadas
-        if alojamiento.esta_disponible(fecha_inicio, fecha_fin):
-            reserva = Reserva.objects.create(
-                usuario=request.user,
-                paquete=paquete,
-                alojamiento=alojamiento,
-                fecha_inicio=fecha_inicio,
-                fecha_fin=fecha_fin,
-                precio_total=precio_total
-            )
-            # Marcar el alojamiento como reservado
-            alojamiento.reservado = True
-            alojamiento.save()
-            # Asociar servicios seleccionados
-            for servicio_id in servicios_ids:
-                reserva.servicios.add(Servicio.objects.get(id=servicio_id))
-            # Enviar correo de confirmación
-            enviar_correo_reserva(request.user, reserva)
-            return redirect('index')
-        else:
-            messages.error(request, "El alojamiento no está disponible en esas fechas.")
-            return redirect('details', id=id)
-
-    # Filtrar alojamientos disponibles solo si las fechas están definidas
-    if 'fecha_inicio' in request.POST and 'fecha_fin' in request.POST:
-        for alojamiento in paquete.hospedaje.all():
-            if alojamiento.esta_disponible(fecha_inicio, fecha_fin):
-                alojamientos_disponibles.append(alojamiento)
+        # Asociar servicios seleccionados
+        for servicio_id in servicios_ids:
+            reserva.servicios.add(Servicio.objects.get(id=servicio_id))
+        return redirect(reverse('index'))
 
     context = {
         'paquete': paquete,
-        'alojamientos_disponibles': alojamientos_disponibles,
+        'alojamientos': Alojamiento.objects.all(),
     }
     return render(request, 'details.html', context)
 
@@ -222,6 +218,11 @@ def alojamiento_admin(request):
             descripcion=request.POST.get('descripcion'),
             tipo=request.POST.get('tipo'),
         )
+        disponibilidad = request.POST.get('disponibilidad')  # Obtener el JSON de disponibilidad
+        if disponibilidad:
+            json.loads(disponibilidad)
+            alojamiento.disponibilidad = disponibilidad  # Asignar el JSON al campo disponibilidad
+            
         alojamiento.save()
 
         # Guardar las imágenes

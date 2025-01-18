@@ -1,7 +1,6 @@
 {% extends 'base_details.html' %}
-{% load static%}
+{% load static %}
 {% block body %} 
-
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <div id="services" class="cards-3">
@@ -28,28 +27,34 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <h3>Reservation date</h3>
-                                    <div class="calendar">
-                                        <div class="headerc">
-                                            <span id="prevBtn" aria-label="Previous month">
-                                                <img src="{% static 'images/icons/arrow-left.svg' %}" alt="Previous">
-                                            </span>
-                                            <div class="monthYear" id="monthYear"></div>
-                                            <span id="nextBtn" aria-label="Next month">
-                                                <img src="{% static 'images/icons/arrow-right.svg' %}" alt="Next">
-                                            </span>
-                                            <span id="todayBtn" aria-label="Select today's date">Hoy</span>
+                                    <form method="get" action="">
+                                        <div class="calendar">
+                                            <div class="headerc">
+                                                <button type="submit" class="btn-solid-reg">Filtrar</button>
+                                                <span id="prevBtn" aria-label="Previous month">
+                                                    <img src="{% static 'images/icons/arrow-left.svg' %}" alt="Previous">
+                                                </span>
+                                                <div class="monthYear" id="monthYear"></div>
+                                                <span id="nextBtn" aria-label="Next month">
+                                                    <img src="{% static 'images/icons/arrow-right.svg' %}" alt="Next">
+                                                </span>
+                                                <span id="todayBtn" aria-label="Select today's date">Hoy</span>
+                                            </div>
+                                            <input type="hidden" name="fecha_inicio" id="fecha_inicio" value="">  <!-- Fecha de inicio -->
+                                            <input type="hidden" name="fecha_fin" id="fecha_fin" value="">  <!-- Fecha de fin -->
+                                            <div class="days">
+                                                <div class="day">Sun</div>
+                                                <div class="day">Mon</div>
+                                                <div class="day">Tue</div>
+                                                <div class="day">Wed</div>
+                                                <div class="day">Thu</div>
+                                                <div class="day">Fri</div>
+                                                <div class="day">Sat</div>
+                                            </div>
+                                            <div class="dates" id="dates"></div>
                                         </div>
-                                        <div class="days">
-                                            <div class="day">Sun</div>
-                                            <div class="day">Mon</div>
-                                            <div class="day">Tue</div>
-                                            <div class="day">Wed</div>
-                                            <div class="day">Thu</div>
-                                            <div class="day">Fri</div>
-                                            <div class="day">Sat</div>
-                                        </div>
-                                        <div class="dates" id="dates"></div>
-                                    </div>
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -59,12 +64,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="container">
+    <div class="container mt-4 mb-4">
         <h2>Services</h2>
-    </div>
-    
-    <div class="container">
         {% for servicio in paquete.servicios.all %}
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="servicios" id="servicio_{{ servicio.id }}" value="{{ servicio.id }}" data-price="{{ servicio.precio }}">
@@ -74,56 +75,49 @@
         </div>
         {% endfor %}
     </div>
-    
+    <div class="mt-4 mb-4"></div>
     <div class="container">
         <h2>Accommodations</h2>
     </div>
-    
-    
-    {% for alojamiento in paquete.hospedaje.all %}
-    {% if alojamiento.reservado == False %}
-    <div class="container tar" data-alojamiento-id="{{ alojamiento.id }}">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="imgreserva">
-                    <div id="carouselAlojamiento" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            {% if alojamiento.imagen.all %}
-                                {% for imagen in alojamiento.imagen.all %}
-                                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                        <img class="" src="{{ imagen.imagen.url }}" alt="{{ alojamiento.nombre }} - {{ imagen.tipo }}">
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="carousel-item active">
-                                    <img class="" src="ruta/a/imagen_por_defecto.jpg" alt="No hay imágenes disponibles">
+    {% for alojamiento in alojamientos %}
+            <div class="container tar-a" data-alojamiento-id="{{ alojamiento.id }}">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="imgreserva">
+                            <div id="carouselAlojamiento" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% if alojamiento.imagen.all %}
+                                        {% for imagen in alojamiento.imagen.all %}
+                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                <img class="" src="{{ imagen.imagen.url }}" alt="{{ alojamiento.nombre }} - {{ imagen.tipo }}">
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="carousel-item active">
+                                            <img class="" src="ruta/a/imagen_por_defecto.jpg" alt="No hay imágenes disponibles">
+                                        </div>
+                                    {% endif %}
                                 </div>
-                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>{{ alojamiento.nombre }}</h3>
+                        <h6> Location: <p> <i class="fas fa-map-marker-alt"></i> {{ alojamiento.ubicacion }}</p> </h6>
+                        <h6>Description: <p>{{ alojamiento.descripcion }}</p></h6>
+                        <br>
+                        <div class="orientacion">
+                            <span class="btn-solid-reg l" onclick="selectAccommodation({{ alojamiento.id }}, {{ alojamiento.precio }})">SELECT</span>
+                            <p class="r">$ {{ alojamiento.precio }}/night</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <h3>{{ alojamiento.nombre }}</h3>
-                <h6><i class="fas fa-map-marker-alt"></i> Location: {{ alojamiento.ubicacion }}</h6>
-                <h6>Description: {{ alojamiento.descripcion }}</h6>
-                <br>
-                <div class="orientacion">
-                    <span class="btn-solid-reg l">SELECT</span> <!-- Botón para seleccionar el alojamiento -->
-                    <p class="r">$ {{ alojamiento.precio }}/night</p> <!-- Precio del alojamiento -->
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-{% endfor %}
-    
-    <input type="hidden" name="servicio.id" id="servicio.id" value="">  <!-- ID del servicio seleccionado -->
+    {% endfor %}
     <input type="hidden" name="alojamiento_id" id="alojamiento_id" value="">  <!-- ID del alojamiento seleccionado -->
-    <input type="hidden" name="fecha_inicio" id="fecha_inicio" value="">  <!-- Fecha de inicio -->
-    <input type="hidden" name="fecha_fin" id="fecha_fin" value="">  <!-- Fecha de fin -->
+    
     <input type="hidden" name="precio_total" id="precio_total" value="0">  <!-- Precio total calculado -->
-
+    <input type="hidden" id="miDiv" data-array="">
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-lg-3">
@@ -140,10 +134,5 @@
         </div>
     </div>
 </form>
-
-<script>
-    const reservas = {{ reservas|safe }};  // Convertir las reservas a un objeto JavaScript
-    console.log(reservas);
-</script>
 
 {% endblock %}
